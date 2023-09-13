@@ -24,6 +24,26 @@ def rmse_metric_function(predictions, labels, **kwargs):
     return np.sqrt(np.mean((pred - label) ** 2))
 
 
+@MetricsHelper.register(name='mae', direction=MetricsHelper.MINIMIZE, overwrite=False)
+def mae_metric_function(predictions, labels, **kwargs):
+    """Compute mae metrics of the time predictions.
+
+    Args:
+        predictions (np.array): model predictions.
+        labels (np.array): ground truth.
+
+    Returns:
+        float: average mae of the time predictions.
+    """
+    seq_mask = kwargs.get('seq_mask')
+    pred = predictions[PredOutputIndex.TimePredIndex][seq_mask]
+    label = labels[PredOutputIndex.TimePredIndex][seq_mask]
+
+    pred = np.reshape(pred, [-1])
+    label = np.reshape(label, [-1])
+    return np.mean(np.abs(pred - label))
+
+
 @MetricsHelper.register(name='acc', direction=MetricsHelper.MAXIMIZE, overwrite=False)
 def acc_metric_function(predictions, labels, **kwargs):
     """Compute accuracy ratio metrics of the type predictions.

@@ -37,12 +37,62 @@ data:
       truncation_side: right
   retweet:
     data_format: pkl
-    train_dir: ../data/retweet/train.pkl
-    valid_dir: ../data/retweet/dev.pkl
-    test_dir: ../data/retweet/test.pkl
+    train_dir: ./data/retweet/train.pkl
+    valid_dir: ./data/retweet/dev.pkl
+    test_dir: ./data/retweet/test.pkl
     data_specs:
       num_event_types: 3
       pad_token_id: 3
+      padding_side: right
+      truncation_side: right
+  meme:
+    data_format: pkl
+    train_dir: ./data/meme/train.pkl
+    valid_dir: ./data/meme/dev.pkl
+    test_dir: ./data/meme/test.pkl
+    data_specs:
+      num_event_types: 4977
+      pad_token_id: 4977
+      padding_side: right
+      truncation_side: right
+  Age:
+    data_format: pkl
+    train_dir: ./data/Age/train.pkl
+    valid_dir: ./data/Age/dev.pkl
+    test_dir: ./data/Age/test.pkl
+    data_specs:
+      num_event_types: 60
+      pad_token_id: 60
+      padding_side: right
+      truncation_side: right
+  so:
+    data_format: pkl
+    train_dir: ./data/so/train.pkl
+    valid_dir: ./data/so/dev.pkl
+    test_dir: ./data/so/test.pkl
+    data_specs:
+      num_event_types: 22
+      pad_token_id: 22
+      padding_side: right
+      truncation_side: right
+  LinkedIn:
+    data_format: pkl
+    train_dir: ./data/LinkedIn/train.pkl
+    valid_dir: ./data/LinkedIn/dev.pkl
+    test_dir: ./data/LinkedIn/test.pkl
+    data_specs:
+      num_event_types: 82
+      pad_token_id: 82
+      padding_side: right
+      truncation_side: right
+  IPTV:
+    data_format: pkl
+    train_dir: ./data/IPTV/train.pkl
+    valid_dir: ./data/IPTV/dev.pkl
+    test_dir: ./data/IPTV/test.pkl
+    data_specs:
+      num_event_types: 16
+      pad_token_id: 16
       padding_side: right
       truncation_side: right
 
@@ -273,20 +323,20 @@ ODETPP_train:
   base_config:
     stage: train
     backend: torch
-    dataset_id: taxi
+    dataset_id: so
     runner_id: std_tpp
     model_id: ODETPP # model name
-    base_dir: './checkpoints/'
+    base_dir: './checkpoints_odetpp/'
   trainer_config:
     batch_size: 32
-    max_epoch: 200
+    max_epoch: 50
     shuffle: False
     optimizer: adam
     learning_rate: 1.e-1
     valid_freq: 1
     use_tfb: False
-    metrics: [ 'acc', 'rmse' ]
-    seed: 2019
+    metrics: [ 'acc', 'mae' ]
+    seed: 2013
     gpu: -1
   model_config:
     hidden_size: 4
@@ -350,20 +400,20 @@ NHP_train:
   base_config:
     stage: train
     backend: torch
-    dataset_id: taxi
+    dataset_id: Age
     runner_id: std_tpp
     model_id: NHP # model name
-    base_dir: './checkpoints/'
+    base_dir: './checkpoints_nhp_age/'
   trainer_config:
-    batch_size: 256
-    max_epoch: 20
+    batch_size: 32
+    max_epoch: 150
     shuffle: False
     optimizer: adam
-    learning_rate: 1.e-3
+    learning_rate: 1.e-2
     valid_freq: 1
     use_tfb: False
-    metrics: [ 'acc', 'rmse' ]
-    seed: 2019
+    metrics: [ 'acc', 'mae' ]
+    seed: 2011
     gpu: -1
   model_config:
     hidden_size: 64
@@ -524,20 +574,20 @@ AttNHP_train:
   base_config:
     stage: train
     backend: torch
-    dataset_id: taxi
+    dataset_id: so
     runner_id: std_tpp
     model_id: AttNHP # model name
-    base_dir: './checkpoints/'
+    base_dir: './checkpoints_attnhp/'
   trainer_config:
-    batch_size: 256
-    max_epoch: 200
+    batch_size: 32
+    max_epoch: 10
     shuffle: False
     optimizer: adam
-    learning_rate: 1.e-3
+    learning_rate: 1.e-2
     valid_freq: 1
     use_tfb: False
-    metrics: [ 'acc', 'rmse' ]
-    seed: 2019
+    metrics: [ 'acc', 'mae' ]
+    seed: 2003
     gpu: -1
   model_config:
     hidden_size: 16
@@ -562,10 +612,10 @@ AttNHP_gen:
   base_config:
     stage: gen
     backend: torch
-    dataset_id: retweet
+    dataset_id: so
     runner_id: std_tpp
     model_id: AttNHP # model name
-    base_dir: './checkpoints/'
+    base_dir: './checkpoints_attnhp/'
   trainer_config:
     batch_size: 256
     max_epoch: 1
