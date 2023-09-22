@@ -180,7 +180,7 @@ class EventSampler(nn.Module):
 
         # 3. compute intensity at sampled times from exp distribution
         # [batch_size, seq_len, num_exp, event_num]
-        intensities_at_sampled_times = intensity_fn(time_seq,
+        intensities_at_sampled_times, hiddens = intensity_fn(time_seq,
                                                     time_delta_seq,
                                                     event_seq,
                                                     exp_numbers,
