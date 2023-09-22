@@ -187,7 +187,7 @@ class TorchBaseModel(nn.Module):
                                                                         dtimes_pred[:, :, None],
                                                                         max_steps=event_seq.size()[1])
 
-        print("hiddens", hiddens.shape)
+        
         # [batch_size, seq_len, event_num]
         intensities_at_times = intensities_at_times.squeeze(dim=-2)
 
