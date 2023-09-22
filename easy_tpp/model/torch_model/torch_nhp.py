@@ -353,4 +353,4 @@ class NHP(TorchBaseModel):
             # [batch_size, num_times, num_mc_sample, num_event_types]
             sampled_intensities = self.layer_intensity(h_ts)
 
-        return sampled_intensities
+        return sampled_intensities, hiddens_ti

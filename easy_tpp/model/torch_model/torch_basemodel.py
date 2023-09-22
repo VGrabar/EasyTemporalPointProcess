@@ -180,18 +180,20 @@ class TorchBaseModel(nn.Module):
         dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
 
         # [batch_size, seq_len, 1, event_num]
-        intensities_at_times = self.compute_intensities_at_sample_times(time_seq,
+        # add hiddens as output
+        intensities_at_times, hiddens = self.compute_intensities_at_sample_times(time_seq,
                                                                         time_delta_seq,
                                                                         event_seq,
                                                                         dtimes_pred[:, :, None],
                                                                         max_steps=event_seq.size()[1])
 
+        print("hiddens", hiddens.shape)
         # [batch_size, seq_len, event_num]
         intensities_at_times = intensities_at_times.squeeze(dim=-2)
 
         types_pred = torch.argmax(intensities_at_times, dim=-1)
 
-        return dtimes_pred, types_pred
+        return dtimes_pred, types_pred, hiddens
 
     def predict_multi_step_since_last_event(self, batch, forward=False):
         """Multi-step prediction since last event in the sequence.
@@ -233,7 +235,7 @@ class TorchBaseModel(nn.Module):
             dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
 
             # [batch_size, seq_len, 1, event_num]
-            intensities_at_times = self.compute_intensities_at_sample_times(time_seq,
+            intensities_at_times, hiddens = self.compute_intensities_at_sample_times(time_seq,
                                                                             time_delta_seq,
                                                                             event_seq,
                                                                             dtimes_pred[:, :, None],

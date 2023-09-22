@@ -129,11 +129,11 @@ class TorchModelWrapper:
                         label_dtime, label_type = batch[1][:, 1:].cpu().numpy(), batch[2][:, 1:].cpu().numpy()
                     if batch[3] is not None:
                         mask = batch[3][:, 1:].cpu().numpy()
-                    pred_dtime, pred_type = self.model.predict_one_step_at_every_event(batch=batch)
+                    pred_dtime, pred_type, hiddens = self.model.predict_one_step_at_every_event(batch=batch)
                     pred_dtime = pred_dtime.detach().cpu().numpy()
                     pred_type = pred_type.detach().cpu().numpy()
 
-            return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,)
+            return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,), hiddens
         else:
             pred_dtime, pred_type, label_dtime, label_type = self.model.predict_multi_step_since_last_event(batch=batch)
             pred_dtime = pred_dtime.detach().cpu().numpy()

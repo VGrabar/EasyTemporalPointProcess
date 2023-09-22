@@ -180,11 +180,12 @@ class TPPRunner(Runner):
         epoch_label = []
         epoch_pred = []
         epoch_mask = []
+        embeddings = []
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
         if phase in [RunnerPhase.TRAIN, RunnerPhase.VALIDATE]:
             for batch in data_loader:
-                batch_loss, batch_num_event, batch_pred, batch_label, batch_mask = \
+                batch_loss, batch_num_event, batch_pred, batch_label, batch_mask, hiddens = \
                     self.model_wrapper.run_batch(batch, phase=phase)
 
                 total_loss += batch_loss

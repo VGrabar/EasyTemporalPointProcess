@@ -58,7 +58,7 @@ class EventSampler(nn.Module):
         dtime_for_bound_sampled = time_delta_seq[:, :, None] * time_for_bound_sampled
 
         # [batch_size, seq_len, num_sample, event_num]
-        intensities_for_bound = intensity_fn(time_seq,
+        intensities_for_bound, hiddens = intensity_fn(time_seq,
                                              time_delta_seq,
                                              event_seq,
                                              dtime_for_bound_sampled,
