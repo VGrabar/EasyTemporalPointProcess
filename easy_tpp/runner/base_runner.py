@@ -120,7 +120,7 @@ class Runner(Registrable):
             **kwargs
         )
         logger.info(f'End {model_id} evaluation! Cost time: {timer.end()}')
-        return metric['rmse']  # return a list of scalr for HPO to use
+        return metric  # return a list of scalr for HPO to use
 
     def gen(self, gen_loader=None, **kwargs):
         if gen_loader is None:

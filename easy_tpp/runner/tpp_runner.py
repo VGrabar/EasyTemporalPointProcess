@@ -188,6 +188,9 @@ class TPPRunner(Runner):
                 batch_loss, batch_num_event, batch_pred, batch_label, batch_mask, hiddens = \
                     self.model_wrapper.run_batch(batch, phase=phase)
 
+                print("hiddens", hiddens.shape)
+                print(hiddens[0])
+                
                 total_loss += batch_loss
                 total_num_event += batch_num_event
                 epoch_pred.append(batch_pred)
