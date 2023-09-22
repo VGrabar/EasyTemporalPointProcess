@@ -4,6 +4,9 @@ from easy_tpp.runner.base_runner import Runner
 from easy_tpp.utils import RunnerPhase, logger, MetricsHelper, MetricsTracker, concat_element, save_pickle
 from easy_tpp.utils.const import Backend
 
+import torch
+import numpy as np
+import pickle
 
 @Runner.register(name='std_tpp')
 class TPPRunner(Runner):
@@ -180,7 +183,7 @@ class TPPRunner(Runner):
         epoch_label = []
         epoch_pred = []
         epoch_mask = []
-        embeddings = []
+        embeddings = np.array([]).reshape(0, 64)
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
         if phase in [RunnerPhase.TRAIN, RunnerPhase.VALIDATE]:
@@ -188,14 +191,22 @@ class TPPRunner(Runner):
                 batch_loss, batch_num_event, batch_pred, batch_label, batch_mask, hiddens = \
                     self.model_wrapper.run_batch(batch, phase=phase)
 
-                print("hiddens", hiddens.shape)
-                print(hiddens[0])
+                last_true = np.sum(batch_mask[0], axis=1) - 1
                 
+                emb = [hiddens[i, last_true[i], :].detach().numpy() for i in range(len(batch_mask[0]))]
+                emb = np.array(emb)
+                embeddings = np.vstack([emb, embeddings])
+
                 total_loss += batch_loss
                 total_num_event += batch_num_event
                 epoch_pred.append(batch_pred)
                 epoch_label.append(batch_label)
                 epoch_mask.append(batch_mask)
+            
+            print("full_emb", embeddings.shape)
+            np.save("nhp_emb.npy", embeddings)
+            with open("nhp_emp.pkl", "wb") as f:
+                pickle.dump(embeddings, f)
 
             avg_loss = total_loss / total_num_event
 
