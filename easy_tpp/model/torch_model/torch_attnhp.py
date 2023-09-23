@@ -319,4 +319,4 @@ class AttNHP(TorchBaseModel):
         else:
             # [batch_size, seq_len, num_samples, num_event_types]
             lambdas = self.layer_intensity(encoder_output)
-        return lambdas
+        return lambdas, encoder_output

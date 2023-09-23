@@ -204,8 +204,8 @@ class TPPRunner(Runner):
                 epoch_mask.append(batch_mask)
             
             print("full_emb", embeddings.shape)
-            np.save("nhp_emb.npy", embeddings)
-            with open("nhp_emp.pkl", "wb") as f:
+            np.save("attnhp_emb.npy", embeddings)
+            with open("attnhp_emb.pkl", "wb") as f:
                 pickle.dump(embeddings, f)
 
             avg_loss = total_loss / total_num_event
