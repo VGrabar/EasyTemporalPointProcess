@@ -10,7 +10,7 @@ def main():
     parser.add_argument('--config_dir', type=str, required=False, default='configs/experiment_config.yaml',
                         help='Dir of configuration yaml to train and evaluate the model.')
 
-    parser.add_argument('--experiment_id', type=str, required=False, default='AttNHP_gen',
+    parser.add_argument('--experiment_id', type=str, required=False, default='AttNHP_eval',
                         help='Experiment id in the config file.')
 
 
