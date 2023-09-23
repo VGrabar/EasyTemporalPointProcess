@@ -223,7 +223,7 @@ class AttNHP(TorchBaseModel):
 
         # 2.2 compute intensities at sampled times
         # [batch_size, seq_len = max_len - 1, num_sample, event_num]
-        lambda_t_sample = self.compute_intensities_at_sample_times(time_seqs[:, :-1],
+        lambda_t_sample, enc_output = self.compute_intensities_at_sample_times(time_seqs[:, :-1],
                                                                    time_delta_seqs[:, :-1],  # not used
                                                                    type_seqs[:, :-1],
                                                                    sample_times,
