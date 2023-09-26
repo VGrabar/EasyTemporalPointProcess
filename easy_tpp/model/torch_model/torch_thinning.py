@@ -172,15 +172,13 @@ class EventSampler(nn.Module):
                                                                    event_seq,
                                                                    intensity_fn,
                                                                    compute_last_step_only)
-
         # 2. draw exp distribution with intensity = intensity_upper_bound
         # we apply fast approximation, i.e., re-use exp sample times for computation
         # [batch_size, seq_len, num_exp]
         exp_numbers = self.sample_exp_distribution(intensity_upper_bound)
-
         # 3. compute intensity at sampled times from exp distribution
         # [batch_size, seq_len, num_exp, event_num]
-        intensities_at_sampled_times, hiddens = intensity_fn(time_seq,
+        intensities_at_sampled_times, _ = intensity_fn(time_seq,
                                                     time_delta_seq,
                                                     event_seq,
                                                     exp_numbers,

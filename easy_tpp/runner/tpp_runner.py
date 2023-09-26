@@ -183,7 +183,7 @@ class TPPRunner(Runner):
         epoch_label = []
         epoch_pred = []
         epoch_mask = []
-        embeddings = np.array([]).reshape(0, 64)
+        embeddings = np.array([]).reshape(0, 32)
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
         if phase in [RunnerPhase.TRAIN, RunnerPhase.VALIDATE]:
@@ -192,9 +192,10 @@ class TPPRunner(Runner):
                     self.model_wrapper.run_batch(batch, phase=phase)
 
                 last_true = np.sum(batch_mask[0], axis=1) - 1
-                
-                emb = [hiddens[i, last_true[i], :].detach().numpy() for i in range(len(batch_mask[0]))]
+                print("hiddens", hiddens.shape)                
+                emb = [hiddens[i, last_true[i],0, :].detach().numpy() for i in range(len(batch_mask[0]))]
                 emb = np.array(emb)
+                print("emb", emb.shape)                
                 embeddings = np.vstack([emb, embeddings])
 
                 total_loss += batch_loss

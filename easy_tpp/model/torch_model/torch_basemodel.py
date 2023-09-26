@@ -168,14 +168,12 @@ class TorchBaseModel(nn.Module):
 
         # [batch_size, seq_len]
         dtime_boundary = time_delta_seq + self.event_sampler.dtime_max
-
         # [batch_size, seq_len, num_sample]
         accepted_dtimes, weights = self.event_sampler.draw_next_time_one_step(time_seq,
                                                                               time_delta_seq,
                                                                               event_seq,
                                                                               dtime_boundary,
                                                                               self.compute_intensities_at_sample_times)
-
         # [batch_size, seq_len]
         dtimes_pred = torch.sum(accepted_dtimes * weights, dim=-1)
 

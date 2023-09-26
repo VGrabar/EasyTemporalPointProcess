@@ -313,7 +313,6 @@ class AttNHP(TorchBaseModel):
 
         # [batch_size, seq_len, num_samples, hidden_size]
         encoder_output = self.compute_states_at_sample_times(time_seqs, type_seqs, attention_mask, sample_times)
-
         if compute_last_step_only:
             lambdas = self.layer_intensity(encoder_output[:, -1:, :, :])
         else:
