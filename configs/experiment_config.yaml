@@ -210,7 +210,7 @@ RMTPP_gen:
 
 FullyNN_train:
   base_config:
-    stage: train
+    stage: eval
     backend: torch
     dataset_id: taxi
     runner_id: std_tpp
@@ -317,6 +317,49 @@ ODETPP_train:
     model_specs:
       ode_num_sample_per_step: 2
       time_factor: 100
+    thinning:
+      num_seq: 10
+      num_sample: 1
+      num_exp: 50 # number of i.i.d. Exp(intensity_bound) draws at one time in thinning algorithm
+      look_ahead_time: 10
+      patience_counter: 5 # the maximum iteration used in adaptive thinning
+      over_sample_rate: 5
+      num_samples_boundary: 5
+      dtime_max: 5
+      num_step_gen: 1
+
+
+ODETPP_eval:
+  base_config:
+    stage: eval
+    backend: torch
+    dataset_id: Age
+    runner_id: std_tpp
+    model_id: ODETPP # model name
+    base_dir: './checkpoints_odetpp/'
+  trainer_config:
+    batch_size: 32
+    max_epoch: 50
+    shuffle: False
+    optimizer: adam
+    learning_rate: 1.e-1
+    valid_freq: 1
+    use_tfb: False
+    metrics: [ 'acc', 'mae' ]
+    seed: 2013
+    gpu: -1
+  model_config:
+    hidden_size: 4
+    time_emb_size: 4
+    num_layers: 1
+    sharing_param_layer: False
+    loss_integral_num_sample_per_step: 20
+    dropout: 0.0
+    use_ln: False
+    model_specs:
+      ode_num_sample_per_step: 2
+      time_factor: 100
+    pretrained_model_dir: ./checkpoints_odetpp_age/20906_140027545118528_230926-091155/models/saved_model
     thinning:
       num_seq: 10
       num_sample: 1

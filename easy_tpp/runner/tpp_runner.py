@@ -197,6 +197,7 @@ class TPPRunner(Runner):
                 emb = np.array(emb)
                 print("emb", emb.shape)                
                 embeddings = np.vstack([emb, embeddings])
+                print("full_emb", embeddings.shape)   
 
                 total_loss += batch_loss
                 total_num_event += batch_num_event
@@ -205,8 +206,8 @@ class TPPRunner(Runner):
                 epoch_mask.append(batch_mask)
             
             print("full_emb", embeddings.shape)
-            np.save("attnhp_emb.npy", embeddings)
-            with open("attnhp_emb.pkl", "wb") as f:
+            np.save("odetpp_emb.npy", embeddings)
+            with open("odetpp_emb.pkl", "wb") as f:
                 pickle.dump(embeddings, f)
 
             avg_loss = total_loss / total_num_event

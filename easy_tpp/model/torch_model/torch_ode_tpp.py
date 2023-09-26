@@ -300,4 +300,4 @@ class ODETPP(TorchBaseModel):
             # [batch_size, num_sample_times, num_mc_sample, num_event_types]
             sampled_intensities = self.layer_intensity(sample_state_ti)
 
-        return sampled_intensities
+        return sampled_intensities, sample_state_ti
