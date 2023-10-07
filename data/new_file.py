@@ -24,15 +24,16 @@ for subset in ["test", "dev", "train"]:
 
         seq_id = seq.split("/")[-1]
         seq_id = seq.split(".")[0]
-        curr_seq["id"] = int(seq_id)
 
+        scale = 1.0
         prev_time = 0
         for ind in df.index:
             seq_elem = {}
-            seq_elem["time_since_last_event"] = df["time"][ind]/86400 - prev_time
-            seq_elem["time_since_start"] = df["time"][ind]/86400
-            prev_time = df["time"][ind]/86400
+            seq_elem["time_since_last_event"] = df["time"][ind]/scale - prev_time
+            seq_elem["time_since_start"] = df["time"][ind]/scale
+            prev_time = df["time"][ind]/scale
             seq_elem["type_event"] = df["event"][ind]
+            seq_elem["id"] = int(seq_id)
             curr_seq.append(seq_elem)
         d[subset].append(curr_seq)
 

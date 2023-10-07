@@ -184,11 +184,12 @@ class TPPRunner(Runner):
         epoch_pred = []
         epoch_mask = []
         embeddings = np.array([]).reshape(0, 32)
+        sequence_ids = []
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
         if phase in [RunnerPhase.TRAIN, RunnerPhase.VALIDATE]:
             for batch in data_loader:
-                batch_loss, batch_num_event, batch_pred, batch_label, batch_mask, hiddens = \
+                batch_loss, batch_num_event, batch_pred, batch_label, batch_mask, hiddens, seq_ids = \
                     self.model_wrapper.run_batch(batch, phase=phase)
 
                 last_true = np.sum(batch_mask[0], axis=1) - 1
@@ -204,11 +205,14 @@ class TPPRunner(Runner):
                 epoch_pred.append(batch_pred)
                 epoch_label.append(batch_label)
                 epoch_mask.append(batch_mask)
+                sequence_ids.append(seq_ids)
             
             print("full_emb", embeddings.shape)
             np.save("odetpp_emb.npy", embeddings)
             with open("odetpp_emb.pkl", "wb") as f:
                 pickle.dump(embeddings, f)
+            with open("odetpp_ids.pkl", "wb") as f:
+                pickle.dump(sequence_ids, f)
 
             avg_loss = total_loss / total_num_event
 

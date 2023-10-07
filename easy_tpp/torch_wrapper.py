@@ -103,6 +103,9 @@ class TorchModelWrapper:
             for prediction we return prediction.
         """
         batch = batch.to(self.device).values()
+        # separate old batch and sequence ids
+        seq_ids = batch[-1]
+        batch = batch[:-1]
         if phase in (RunnerPhase.TRAIN, RunnerPhase.VALIDATE):
             # set mode to train
             is_training = (phase == RunnerPhase.TRAIN)
@@ -132,7 +135,7 @@ class TorchModelWrapper:
                     pred_dtime = pred_dtime.detach().cpu().numpy()
                     pred_type = pred_type.detach().cpu().numpy()
 
-            return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,), hiddens
+            return loss.item(), num_event, (pred_dtime, pred_type), (label_dtime, label_type), (mask,), hiddens, seq_ids
         else:
             pred_dtime, pred_type, label_dtime, label_type = self.model.predict_multi_step_since_last_event(batch=batch)
             pred_dtime = pred_dtime.detach().cpu().numpy()

@@ -15,6 +15,7 @@ class TPPDataset(Dataset):
         self.time_seqs = self.data_dict['time_seqs']
         self.time_delta_seqs = self.data_dict['time_delta_seqs']
         self.type_seqs = self.data_dict['type_seqs']
+        self.id_seqs = self.data_dict['id_seqs']
 
     def __len__(self):
         """
@@ -41,7 +42,7 @@ class TPPDataset(Dataset):
 
         """
         return dict({'time_seqs': self.time_seqs[idx], 'time_delta_seqs': self.time_delta_seqs[idx],
-                     'type_seqs': self.type_seqs[idx]})
+                     'type_seqs': self.type_seqs[idx], 'id_seqs': self.id_seqs[idx]})
 
     def to_tf_dataset(self, data_collator: TPPDataCollator, **kwargs):
         """Generate a dataset to use in Tensorflow
