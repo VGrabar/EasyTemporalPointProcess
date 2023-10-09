@@ -58,7 +58,7 @@ data:
   Age:
     data_format: pkl
     train_dir: ./data/Age/train.pkl
-    valid_dir: ./data/Age/dev.pkl
+    valid_dir: ./data/Age/full.pkl
     test_dir: ./data/Age/test.pkl
     data_specs:
       num_event_types: 60
@@ -463,7 +463,7 @@ NHP_eval:
   model_config:
     hidden_size: 64
     loss_integral_num_sample_per_step: 20
-#    pretrained_model_dir: ./checkpoints/75518_4377527680_230530-132355/models/saved_model
+    pretrained_model_dir: ./checkpoints_nhp_age/30974_139734110959424_230913-032802/models/saved_model
     thinning:
       num_seq: 10
       num_sample: 1
