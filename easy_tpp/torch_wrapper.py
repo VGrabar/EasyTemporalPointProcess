@@ -102,11 +102,12 @@ class TorchModelWrapper:
             tuple: for training and validation we return loss, prediction and labels;
             for prediction we return prediction.
         """
-       
-        batch = batch.to(self.device).values()
         # separate old batch and sequence ids
         seq_ids = batch[-1]
         batch = batch[:-1]
+        seq_ids = seq_ids.to(self.device).values()
+        batch = batch.to(self.device).values()
+        
         if phase in (RunnerPhase.TRAIN, RunnerPhase.VALIDATE):
             # set mode to train
             is_training = (phase == RunnerPhase.TRAIN)

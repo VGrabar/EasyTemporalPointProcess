@@ -28,7 +28,7 @@ class TPPDataLoader:
         time_seqs = [[x["time_since_start"] for x in seq] for seq in source_data]
         type_seqs = [[x["type_event"] for x in seq] for seq in source_data]
         time_delta_seqs = [[x["time_since_last_event"] for x in seq] for seq in source_data]
-        print(source_data[0][0].keys())
+        
         id_seqs = [seq[0]["id"] for seq in source_data]
 
         input_dict = dict({'time_seqs': time_seqs, 'time_delta_seqs': time_delta_seqs, 'type_seqs': type_seqs, "id_seqs": id_seqs})
