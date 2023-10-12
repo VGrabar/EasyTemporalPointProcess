@@ -38,8 +38,11 @@ class TPPDataCollator:
         if return_tensors is None:
             return_tensors = self.return_tensors
 
-        seq_ids = features[-1]
-        features = features[:-1]
+        seq_ids = [f["id_seqs"] for f in features]
+        #for unwanted_key in unwanted: del your_dict[unwanted_key]
+        keys_to_leave = ["time_seqs", "time_delta_seqs", "type_seqs"]
+        new_features = [{key: f[key] for key in your_keys} for f in features]
+        features = new_features
 
         batch = self.tokenizer.pad(
             features,
