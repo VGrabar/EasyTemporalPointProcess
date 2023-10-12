@@ -103,12 +103,10 @@ class TorchModelWrapper:
             for prediction we return prediction.
         """
         # separate old batch and sequence ids
+        seq_ids = batch[1]
+        batch = batch[0]
         batch = batch.to(self.device).values()
-        seq_ids = batch[-1]
-        batch = batch[:-1]
-        print(seq_ids)
-        print(batch)
-        #seq_ids = seq_ids.to(self.device).values()
+        seq_ids = seq_ids.to(self.device).values()
         
         if phase in (RunnerPhase.TRAIN, RunnerPhase.VALIDATE):
             # set mode to train
