@@ -38,6 +38,9 @@ class TPPDataCollator:
         if return_tensors is None:
             return_tensors = self.return_tensors
 
+        seq_ids = features[-1]
+        features = features[:-1]
+
         batch = self.tokenizer.pad(
             features,
             padding=self.padding,
@@ -46,4 +49,4 @@ class TPPDataCollator:
             return_tensors=return_tensors,
         )
 
-        return batch
+        return batch, seq_ids

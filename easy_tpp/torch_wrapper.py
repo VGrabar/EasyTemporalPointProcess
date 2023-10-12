@@ -102,6 +102,7 @@ class TorchModelWrapper:
             tuple: for training and validation we return loss, prediction and labels;
             for prediction we return prediction.
         """
+       
         batch = batch.to(self.device).values()
         # separate old batch and sequence ids
         seq_ids = batch[-1]

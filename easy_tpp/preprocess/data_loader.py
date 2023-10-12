@@ -19,7 +19,6 @@ class TPPDataLoader:
 
     def build_input_from_pkl(self, source_dir: str, split: str):
         data = load_pickle(source_dir)
-        print(source_dir)
 
         py_assert(data["dim_process"] == self.num_event_types,
                   ValueError,
