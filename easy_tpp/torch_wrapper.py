@@ -105,11 +105,8 @@ class TorchModelWrapper:
         # separate old batch and sequence ids
         seq_ids = batch[1]
         batch = batch[0]
-        print(batch)
-        print(seq_ids)
         batch = batch.to(self.device).values()
-        seq_ids = seq_ids.to(self.device).values()
-        
+
         if phase in (RunnerPhase.TRAIN, RunnerPhase.VALIDATE):
             # set mode to train
             is_training = (phase == RunnerPhase.TRAIN)
