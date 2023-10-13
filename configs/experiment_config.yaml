@@ -338,7 +338,7 @@ ODETPP_eval:
     model_id: ODETPP # model name
     base_dir: './checkpoints_odetpp/'
   trainer_config:
-    batch_size: 32
+    batch_size: 256
     max_epoch: 50
     shuffle: False
     optimizer: adam
@@ -450,7 +450,7 @@ NHP_eval:
     model_id: NHP # model name
     base_dir: './checkpoints_nhp_age/'
   trainer_config:
-    batch_size: 32
+    batch_size: 128
     max_epoch: 150
     shuffle: False
     optimizer: adam
