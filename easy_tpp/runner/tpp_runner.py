@@ -183,7 +183,7 @@ class TPPRunner(Runner):
         epoch_label = []
         epoch_pred = []
         epoch_mask = []
-        embeddings = np.array([]).reshape(0, 32)
+        embeddings = np.array([]).reshape(0, 4)
         sequence_ids = np.array([])
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
@@ -211,12 +211,12 @@ class TPPRunner(Runner):
                 print("full_seq", sequence_ids.shape)   
             
             print("full_emb", embeddings.shape)
-            np.save("attnhp_emb.npy", embeddings)
-            with open("attnhp_emb.pkl", "wb") as f:
+            np.save("odetpp_emb.npy", embeddings)
+            with open("odetpp_emb.pkl", "wb") as f:
                 pickle.dump(embeddings, f)
             print("full_seq", sequence_ids.shape)
-            np.save("attnhp_ids.npy", sequence_ids)
-            with open("attnhp_ids.pkl", "wb") as f:
+            np.save("odetpp_ids.npy", sequence_ids)
+            with open("odetpp_ids.pkl", "wb") as f:
                 pickle.dump(sequence_ids, f)
 
             avg_loss = total_loss / total_num_event
