@@ -16,6 +16,8 @@ experiments
 log
 *.swp
 *.swo
+*.pkl
+*.npy
 .vscode
 
 
