@@ -183,8 +183,8 @@ class TPPRunner(Runner):
         epoch_label = []
         epoch_pred = []
         epoch_mask = []
-        mean_embeddings = np.array([]).reshape(0, 64)
-        max_embeddings = np.array([]).reshape(0, 64)
+        mean_embeddings = np.array([]).reshape(0, 32)
+        max_embeddings = np.array([]).reshape(0, 32)
         sequence_ids = np.array([])
         pad_index = self.runner_config.data_config.data_specs.pad_token_id
         metrics_dict = OrderedDict()
@@ -195,7 +195,7 @@ class TPPRunner(Runner):
 
                 last_true = np.sum(batch_mask[0], axis=1) - 1
                 print("hiddens", hiddens.shape)                
-                #hiddens = hiddens[:, :, 0, :]
+                hiddens = hiddens[:, :, 0, :]
                 mean_emb = torch.mean(hiddens, dim=1).detach().numpy()
                 max_emb, indices = torch.max(hiddens, dim=1)
                 max_emb = max_emb.detach().numpy()
@@ -218,15 +218,15 @@ class TPPRunner(Runner):
                 print("full_seq", sequence_ids.shape)   
             
             print("full_emb", max_embeddings.shape)
-            np.save("nhp_max_emb.npy", max_embeddings)
-            with open("nhp_max_emb.pkl", "wb") as f:
+            np.save("attnhp_max_emb.npy", max_embeddings)
+            with open("attnhp_max_emb.pkl", "wb") as f:
                 pickle.dump(max_embeddings, f)
-            np.save("nhp_mean_emb.npy", mean_embeddings)
-            with open("nhp_mean_emb.pkl", "wb") as f:
+            np.save("attnhp_mean_emb.npy", mean_embeddings)
+            with open("attnhp_mean_emb.pkl", "wb") as f:
                 pickle.dump(mean_embeddings, f)
             print("full_seq", sequence_ids.shape)
-            np.save("nhp_ids.npy", sequence_ids)
-            with open("nhp_ids.pkl", "wb") as f:
+            np.save("attnhp_ids.npy", sequence_ids)
+            with open("attnhp_ids.pkl", "wb") as f:
                 pickle.dump(sequence_ids, f)
 
             avg_loss = total_loss / total_num_event

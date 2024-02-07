@@ -651,7 +651,7 @@ AttNHP_train:
   base_config:
     stage: train
     backend: torch
-    dataset_id: so
+    dataset_id: Age
     runner_id: std_tpp
     model_id: AttNHP # model name
     base_dir: './checkpoints_attnhp/'
